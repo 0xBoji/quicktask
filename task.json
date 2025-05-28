@@ -1,0 +1,89 @@
+{
+    "appName": "QuickTask",
+    "description": "A Collaborative To-Do App with Auth & Realtime Updates",
+    "coreFeatures": [
+      {
+        "name": "User Authentication",
+        "description": "Email/password or OAuth via NextAuth.js or Supabase"
+      },
+      {
+        "name": "Task List Management",
+        "description": "Create/manage task lists with title, description, due date, priority"
+      },
+      {
+        "name": "Collaboration",
+        "description": "Share task lists with other users"
+      },
+      {
+        "name": "Real-time Updates",
+        "description": "Real-time task updates using Supabase Realtime or WebSockets"
+      },
+      {
+        "name": "Task Operations",
+        "description": "Mark tasks complete, delete, and edit"
+      },
+      {
+        "name": "Theme Toggle",
+        "description": "Dark/light theme toggle"
+      },
+      {
+        "name": "Responsive Design",
+        "description": "Responsive UI for Mobile and Desktop"
+      }
+    ],
+    "techStack": {
+      "frontend": {
+        "framework": "Next.js (App Router)",
+        "styling": "Tailwind CSS"
+      },
+      "backend": {
+        "options": [
+          "API routes in Next.js",
+          "Supabase/Prisma"
+        ]
+      },
+      "authentication": {
+        "options": [
+          "NextAuth.js",
+          "Supabase Auth"
+        ]
+      },
+      "realtime": {
+        "options": [
+          "Supabase Realtime",
+          "Socket.IO"
+        ]
+      },
+      "deployment": "Vercel"
+    },
+    "bonusFeatures": [
+      {
+        "name": "Offline Support",
+        "description": "Offline support using Service Workers (PWA-ready)"
+      },
+      {
+        "name": "Drag and Drop",
+        "description": "Drag-and-drop for task sorting"
+      },
+      {
+        "name": "Notifications",
+        "description": "Notifications via browser or email using Resend"
+      },
+      {
+        "name": "Audit Log",
+        "description": "Audit log of task changes (who did what and when)"
+      }
+    ],
+    "projectType": "Full-stack web application",
+    "complexity": "Intermediate to Advanced",
+    "estimatedDevelopmentTime": "4-8 weeks",
+    "keyTechnologies": [
+      "Next.js",
+      "Tailwind CSS",
+      "Supabase",
+      "NextAuth.js",
+      "WebSockets",
+      "PWA",
+      "Resend"
+    ]
+  }
