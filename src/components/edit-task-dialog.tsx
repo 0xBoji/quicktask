@@ -22,12 +22,12 @@ interface EditTaskDialogProps {
 
 export function EditTaskDialog({ task, onSuccess, trigger }: EditTaskDialogProps) {
   const [open, setOpen] = useState(false);
-  
+
   function handleSuccess() {
     setOpen(false);
     if (onSuccess) onSuccess();
   }
-  
+
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
@@ -41,10 +41,10 @@ export function EditTaskDialog({ task, onSuccess, trigger }: EditTaskDialogProps
         <DialogHeader>
           <DialogTitle>Edit Task</DialogTitle>
           <DialogDescription>
-            Update your task details. Click save when you're done.
+            Update your task details. Click save when you&apos;re done.
           </DialogDescription>
         </DialogHeader>
-        <EditTaskForm 
+        <EditTaskForm
           task={task}
           onSuccess={handleSuccess}
           onCancel={() => setOpen(false)}

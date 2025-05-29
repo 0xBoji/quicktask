@@ -19,7 +19,7 @@ const DASHBOARD_CONFIG = {
 
 export default function DashboardPage() {
   const { isAuthenticated, loading } = useAuthGuard();
-  const { tasks, isLoading, error, getTaskCounts } = useTask();
+  const { tasks = [], isLoading = false, error = null, getTaskCounts = () => {} } = useTask() || {};
 
   // Show loading while checking authentication
   if (loading) {

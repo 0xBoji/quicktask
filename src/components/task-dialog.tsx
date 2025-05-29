@@ -20,12 +20,12 @@ interface TaskDialogProps {
 
 export function TaskDialog({ onSuccess, trigger }: TaskDialogProps) {
   const [open, setOpen] = useState(false);
-  
+
   function handleSuccess() {
     setOpen(false);
     if (onSuccess) onSuccess();
   }
-  
+
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
@@ -39,14 +39,14 @@ export function TaskDialog({ onSuccess, trigger }: TaskDialogProps) {
         <DialogHeader>
           <DialogTitle>Create New Task</DialogTitle>
           <DialogDescription>
-            Add a new task to your list. Click create when you're done.
+            Add a new task to your list. Click create when you&apos;re done.
           </DialogDescription>
         </DialogHeader>
-        <TaskForm 
+        <TaskForm
           onSuccess={handleSuccess}
           onCancel={() => setOpen(false)}
         />
       </DialogContent>
     </Dialog>
   );
-} 
+}

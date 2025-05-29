@@ -5,7 +5,7 @@ import { usePathname, useRouter } from "next/navigation";
 import { ThemeToggle } from "@/components/theme-toggle";
 import { Button } from "@/components/ui/button";
 import { APP_CONFIG, ROUTES } from "@/constants/app";
-import { LogOut, Home, ListTodo, PlusCircle } from "lucide-react";
+import { LogOut, Home, ListTodo } from "lucide-react";
 import { useAuthContext } from "@/providers/auth-provider";
 import { signOut } from "@/lib/supabase";
 import { toast } from "sonner";
@@ -27,8 +27,9 @@ export function Header() {
       await signOut();
       toast.success("Logged out successfully!");
       router.push(ROUTES.HOME);
-    } catch (error: any) {
-      toast.error(error.message || "Failed to log out. Please try again.");
+    } catch (error: unknown) {
+      const errorMessage = error instanceof Error ? error.message : "Failed to log out. Please try again.";
+      toast.error(errorMessage);
     }
   };
 
@@ -57,20 +58,12 @@ export function Header() {
                 key={item.name}
                 variant={pathname === item.href ? "default" : "ghost"}
                 size="sm"
-                asChild={!item.action}
-                onClick={item.action ? () => document.getElementById('new-task-dialog')?.click() : undefined}
+                asChild
               >
-                {item.action ? (
-                  <div className="flex items-center cursor-pointer">
-                    {item.icon}
-                    {item.name}
-                  </div>
-                ) : (
-                  <Link href={item.href} className="flex items-center">
-                    {item.icon}
-                    {item.name}
-                  </Link>
-                )}
+                <Link href={item.href} className="flex items-center">
+                  {item.icon}
+                  {item.name}
+                </Link>
               </Button>
             ))}
           </nav>
@@ -116,21 +109,13 @@ export function Header() {
               key={item.name}
               variant={pathname === item.href ? "default" : "ghost"}
               size="sm"
-              asChild={!item.action}
-              onClick={item.action ? () => document.getElementById('new-task-dialog')?.click() : undefined}
+              asChild
               className="flex-1"
             >
-              {item.action ? (
-                <div className="flex items-center justify-center">
-                  {item.icon}
-                  <span className="text-xs">{item.name}</span>
-                </div>
-              ) : (
-                <Link href={item.href} className="flex items-center justify-center">
-                  {item.icon}
-                  <span className="text-xs">{item.name}</span>
-                </Link>
-              )}
+              <Link href={item.href} className="flex items-center justify-center">
+                {item.icon}
+                <span className="text-xs">{item.name}</span>
+              </Link>
             </Button>
           ))}
         </nav>

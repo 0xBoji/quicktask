@@ -47,7 +47,7 @@ export function EditTaskForm({ task, onSuccess, onCancel }: EditTaskFormProps) {
 
       // Call onSuccess callback if provided
       if (onSuccess) onSuccess();
-    } catch (err) {
+    } catch {
       // Error handling is done in the store
     }
   }

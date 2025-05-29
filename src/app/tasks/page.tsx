@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect } from "react";
+import { useEffect, Suspense } from "react";
 import { Button } from "@/components/ui/button";
 import { ROUTES, TASK_STATUS } from "@/constants/app";
 import { ListTodo } from "lucide-react";
@@ -13,12 +13,10 @@ import { useTask } from "@/providers/task-provider";
 import { PriorityBadge } from "@/components/priority-badge";
 import { StatusBadge } from "@/components/status-badge";
 import { Pagination } from "@/components/pagination";
-import { useSearchParams, useRouter } from "next/navigation";
+
 
 export default function TasksPage() {
   const { isAuthenticated, loading } = useAuthGuard();
-  const searchParams = useSearchParams();
-  const router = useRouter();
 
   // Show loading while checking authentication
   if (loading) {
@@ -39,30 +37,37 @@ export default function TasksPage() {
     return null;
   }
 
-  return <TasksPageContent searchParams={searchParams} router={router} />;
+  return (
+    <Suspense fallback={<div>Loading...</div>}>
+      <TasksPageContent />
+    </Suspense>
+  );
 }
 
-function TasksPageContent({ searchParams, router }: { searchParams: any, router: any }) {
+function TasksPageContent() {
+  const { useSearchParams, useRouter } = require("next/navigation");
+  const searchParams = useSearchParams();
+  const router = useRouter();
   const {
-    tasks,
-    isLoading,
-    error,
-    fetchTasks,
-    deleteTask,
-    updateTask,
-    page,
-    limit,
-    totalCount,
-    setPage,
-    setLimit,
-    statusFilter,
-    setStatusFilter
-  } = useTask();
+    tasks = [],
+    isLoading = false,
+    error = null,
+    fetchTasks = () => {},
+    deleteTask = () => {},
+    updateTask = () => {},
+    page = 1,
+    limit = 10,
+    totalCount = 0,
+    setPage = () => {},
+    setLimit = () => {},
+    statusFilter = 'all',
+    setStatusFilter = () => {}
+  } = useTask() || {};
 
   // Get query parameters
-  const pageParam = searchParams.get('page');
-  const limitParam = searchParams.get('limit');
-  const statusParam = searchParams.get('status');
+  const pageParam = searchParams?.get('page');
+  const limitParam = searchParams?.get('limit');
+  const statusParam = searchParams?.get('status');
 
   // Initialize with URL parameters or defaults
   useEffect(() => {
@@ -83,7 +88,7 @@ function TasksPageContent({ searchParams, router }: { searchParams: any, router:
   // Handle page change
   const handlePageChange = (newPage: number) => {
     // Update URL
-    const params = new URLSearchParams(searchParams.toString());
+    const params = new URLSearchParams(searchParams?.toString() || '');
     params.set('page', newPage.toString());
     router.push(`${ROUTES.TASKS}?${params.toString()}`);
 
@@ -94,7 +99,7 @@ function TasksPageContent({ searchParams, router }: { searchParams: any, router:
   // Handle limit change
   const handleLimitChange = (newLimit: number) => {
     // Update URL
-    const params = new URLSearchParams(searchParams.toString());
+    const params = new URLSearchParams(searchParams?.toString() || '');
     params.set('limit', newLimit.toString());
     params.set('page', '1'); // Reset to first page
     router.push(`${ROUTES.TASKS}?${params.toString()}`);
@@ -106,7 +111,7 @@ function TasksPageContent({ searchParams, router }: { searchParams: any, router:
   // Handle status filter change
   const handleStatusChange = (status: TaskStatus | 'all') => {
     // Update URL
-    const params = new URLSearchParams(searchParams.toString());
+    const params = new URLSearchParams(searchParams?.toString() || '');
     params.set('status', status);
     params.set('page', '1'); // Reset to first page
     router.push(`${ROUTES.TASKS}?${params.toString()}`);
@@ -118,7 +123,7 @@ function TasksPageContent({ searchParams, router }: { searchParams: any, router:
   async function handleDeleteTask(id: string) {
     try {
       await deleteTask(id);
-    } catch (err) {
+    } catch {
       // Error handling is done in the store
     }
   }
@@ -126,7 +131,7 @@ function TasksPageContent({ searchParams, router }: { searchParams: any, router:
   async function handleTaskStatusChange(id: string, status: TaskStatus) {
     try {
       await updateTask(id, { status });
-    } catch (err) {
+    } catch {
       // Error handling is done in the store
     }
   }

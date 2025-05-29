@@ -4,7 +4,7 @@ import { TASK_STATUS } from '@/constants/app';
 import { eq, and } from 'drizzle-orm';
 
 // Helper function to convert database task to Task type
-const convertDbTaskToTask = (dbTask: any): Task => ({
+const convertDbTaskToTask = (dbTask: Record<string, unknown>): Task => ({
   ...dbTask,
   created_at: dbTask.created_at.toISOString(),
   updated_at: dbTask.updated_at.toISOString(),

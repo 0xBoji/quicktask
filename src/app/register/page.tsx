@@ -64,8 +64,9 @@ export default function RegisterPage() {
 
       toast.success("Registration successful! Please check your email to verify your account.");
       router.push(ROUTES.LOGIN);
-    } catch (error: any) {
-      toast.error(error.message || "Registration failed. Please try again.");
+    } catch (error: unknown) {
+      const errorMessage = error instanceof Error ? error.message : "Registration failed. Please try again.";
+      toast.error(errorMessage);
     } finally {
       setIsLoading(false);
     }
@@ -78,8 +79,9 @@ export default function RegisterPage() {
       await signInWithGoogle();
       // Note: The redirect will happen automatically, so we don't need to manually navigate
       toast.success("Redirecting to Google...");
-    } catch (error: any) {
-      toast.error(error.message || "Google registration failed. Please try again.");
+    } catch (error: unknown) {
+      const errorMessage = error instanceof Error ? error.message : "Google registration failed. Please try again.";
+      toast.error(errorMessage);
     } finally {
       setIsGoogleLoading(false);
     }

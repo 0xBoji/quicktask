@@ -6,12 +6,11 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { TASK_PRIORITIES, TASK_STATUS } from "@/constants/app";
-import { TaskPriority, TaskStatus } from "@/types";
+import { TaskPriority } from "@/types";
 import { toast } from "sonner";
 import { useTask } from "@/providers/task-provider";
 
 // Constants for the task form
-const TASKS_TABLE = 'tasks';
 
 interface TaskFormProps {
   onSuccess?: () => void;
@@ -53,7 +52,7 @@ export function TaskForm({ onSuccess, onCancel }: TaskFormProps) {
 
       // Call onSuccess callback if provided
       if (onSuccess) onSuccess();
-    } catch (err) {
+    } catch {
       // Error handling is done in the store
     }
   }

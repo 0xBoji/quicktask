@@ -46,8 +46,9 @@ export default function LoginPage() {
 
       toast.success("Login successful!");
       router.push(ROUTES.DASHBOARD);
-    } catch (error: any) {
-      toast.error(error.message || "Login failed. Please try again.");
+    } catch (error: unknown) {
+      const errorMessage = error instanceof Error ? error.message : "Login failed. Please try again.";
+      toast.error(errorMessage);
     } finally {
       setIsLoading(false);
     }
@@ -60,8 +61,9 @@ export default function LoginPage() {
       await signInWithGoogle();
       // Note: The redirect will happen automatically, so we don't need to manually navigate
       toast.success("Redirecting to Google...");
-    } catch (error: any) {
-      toast.error(error.message || "Google login failed. Please try again.");
+    } catch (error: unknown) {
+      const errorMessage = error instanceof Error ? error.message : "Google login failed. Please try again.";
+      toast.error(errorMessage);
     } finally {
       setIsGoogleLoading(false);
     }
@@ -172,7 +174,7 @@ export default function LoginPage() {
             </Button>
 
             <div className="text-center text-sm">
-              Don't have an account?{" "}
+              Don&apos;t have an account?{" "}
               <Link href={ROUTES.REGISTER} className="text-primary hover:underline">
                 Sign up
               </Link>

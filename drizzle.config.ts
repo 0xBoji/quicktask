@@ -10,7 +10,7 @@ export default {
   out: "./drizzle",
   dialect: "postgresql",
   dbCredentials: {
-    url: process.env.CONNECT_STRING || DB_CONFIG.CONNECTION_STRING,
+    url: process.env.CONNECT_STRING || DB_CONFIG.CONNECTION_STRING || "",
   },
   verbose: true,
   strict: true,

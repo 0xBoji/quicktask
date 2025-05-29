@@ -1,51 +1,14 @@
 import { drizzle } from "drizzle-orm/node-postgres";
 import { migrate } from "drizzle-orm/node-postgres/migrator";
 import { Pool } from "pg";
-import { TASK_STATUS, DB_CONFIG } from "@/constants/app";
+import { DB_CONFIG } from "@/constants/app";
 import * as dotenv from "dotenv";
 
 // Load environment variables
 dotenv.config({ path: '.env.local' });
 
-// Sample data for initial seeding
-const sampleTasks = [
-  {
-    title: 'Complete project setup',
-    description: 'Set up the initial project structure and dependencies',
-    status: TASK_STATUS.COMPLETED,
-    priority: 'high',
-    user_id: 'anonymous',
-  },
-  {
-    title: 'Implement authentication',
-    description: 'Add user authentication using Supabase Auth',
-    status: TASK_STATUS.IN_PROGRESS,
-    priority: 'high',
-    user_id: 'anonymous',
-  },
-  {
-    title: 'Create task components',
-    description: 'Design and implement UI components for task management',
-    status: TASK_STATUS.TODO,
-    priority: 'medium',
-    user_id: 'anonymous',
-  },
-  {
-    title: 'Write unit tests',
-    description: 'Add comprehensive test coverage for all components',
-    status: TASK_STATUS.TODO,
-    priority: 'medium',
-    user_id: 'anonymous',
-  },
-  {
-    title: 'Deploy to production',
-    description: 'Deploy the application to production environment',
-    status: TASK_STATUS.TODO,
-    priority: 'low',
-    user_id: 'anonymous',
-    due_date: new Date(Date.now() + 14 * 24 * 60 * 60 * 1000), // 2 weeks from now
-  }
-];
+// Sample data for initial seeding (commented out as seed file was removed)
+// const sampleTasks = [...];
 
 // Main migration function
 async function main() {
@@ -83,11 +46,8 @@ async function main() {
     if (existingTasks.length === 0) {
       console.log("No existing tasks found. Inserting sample data...");
 
-      for (const task of sampleTasks) {
-        await db.insert(schema.tasks).values(task);
-      }
-
-      console.log(`Successfully inserted ${sampleTasks.length} sample tasks`);
+      // Sample tasks insertion removed
+      console.log("Sample data insertion skipped (seed file removed)");
     } else {
       console.log("Data already exists. Skipping seed.");
     }
